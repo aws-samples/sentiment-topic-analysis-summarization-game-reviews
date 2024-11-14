@@ -1,0 +1,4 @@
+requests
+fastapi
+mangum
+boto3
