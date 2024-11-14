@@ -27,6 +27,6 @@
     "eslint-plugin-react": "7.35.2",
     "eslint-plugin-react-hooks": "^5.1.0-rc-2ec26bc4-20241111",
     "eslint-plugin-react-refresh": "0.4.11",
-    "vite": "5.4.5"
+    "vite": "5.4.11"
   }
 }
