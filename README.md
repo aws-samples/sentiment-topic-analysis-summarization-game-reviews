@@ -9,22 +9,30 @@ Game reviews are one form of feedback, gathered from digital storefronts and pro
 Conducting effective analysis requires carefully engineered prompts tailored to each use case. Prompt engineering involves crafting model inputs that shape and guide language model responses, and well-designed prompts can steer models toward useful, nuanced, and benign outputs.
 
 ## Solution Overview
+The solution for sentiment analysis, classification and summarization of game reviews consists of six main components:
+
+1. User experience
+2. Request management
+3. Workflow orchestration for sentiment analysis and classification
+4. Data and metadata storage
+5. Summarization
+6. Monitoring
 
 ![alt text](assets/solution2-High%20Level%20Arch.png "Solution diagram")
 
-These following steps talk through the sequence of actions that enable game reviews sentiment analysis and summarization with AWS AI/ML services.
+User experience: The solution contains a static web application hosted in Amazon Simple Storage Service (Amazon S3). We deploy an Amazon CloudFront distribution to serve this static website and implement origin access control (OAC) to restrict access to the Amazon S3 origin. Additionally, we use Amazon Cognito to protect the web application from unauthorized access.
 
-1. Amazon Simple Storage Service (Amazon S3) hosts a static website for the video summarization workload, served by an Amazon CloudFront distribution. Amazon Cognito provides customer identity and sign-in functionality to the web application.
-2. Amazon S3 stores the source CSV files which are uploaded through Pre-signed URLs.
-3. To perform sentiment and analysis for each review, make an API call to Amazon API Gateway that invokes a Lambda function that executes a new AWS Step Functions workflow.
-4. Geenetate JSONL file from the uploaded CSV which is the required format for Amazon Bedrock batch inference API
-5. Amazon Bedrock endpoint initiates the batch inference for all reviews.
-6. An AWS Lambda function is checking the job status and updates the status of the job in Amazon DynamoDB.
-7. AWS Lambda function store the results as Amazon DynamoDB entries in a table
-8. Amazon S3 stores the Amazon Bedrock analysis results that offers durable, highly available and scalable data storage at low cost.
-9. Amazon Bedrock Converse API is used to chat with LLMs
-10. Amazon Bedrock Converse API is using tools to make external requests to the Amazon DynamoDB table in order to get reviews relavant to the prompt from the user.
-11. Amazon CloudWatch and Amazon EventBridge monitor in near real-time every component, and can be used to integrate this workflow into other systems.
+Request management: We use Amazon API Gateway as the entry point for all near real-time communication between the UI application and the APIs exposed by the different workloads of the solution. Through this gateway, users can initiate requests for creating, reading, updating, deleting (CRUD) data, as well as running workflows. The API requests also invoke Amazon Web Services (AWS) Lambda functions that send the pre-processed requests to AWS Step Functions and retrieve and summarize reviews.
+
+Workflow orchestration for sentiment analysis and classification: The sentiment analysis and classification of game reviews begins by creating a JSONL file containing the necessary prompt and properties required for analyzing each review. Using Anthropic Claude 3.5 Sonnet, a large language foundation model hosted in Amazon Bedrock, we process the game reviews in batches.
+
+Amazon Bedrock is a fully managed service that offers a choice of high-performing foundation models (FMs) from leading AI companies. It also enables you to bring your own custom models and use them seamlessly on Amazon Bedrock. We encourage you to experiment with different models to find what works best for your company’s situation.
+
+After the Amazon Bedrock job completes, the batch analysis results are stored in an S3 bucket. We then read the results from the S3 bucket and store them in Amazon DynamoDB, enabling users to query the results and filter game reviews based on their topic classification and sentiment.
+
+Data and metadata storage: This solution leverages Amazon S3 for storing uploaded game reviews and output results, providing durable, highly available, and scalable data storage at a low cost. We use Amazon DynamoDB, a NoSQL database service, to store all analysis and job metadata, allowing users to track batch job status and other relevant information efficiently.
+
+Monitoring: The solution stores the logs in Amazon CloudWatch Logs, providing invaluable monitoring information during both development and live operations.
 
 # Prerequisites
 
