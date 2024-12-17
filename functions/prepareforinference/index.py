@@ -24,8 +24,7 @@ def lambda_handler(event, context):
     ssmParams = getSSMParams()
 
     game_id = event["game_id"]
-    #extract s3 key from s3_raw_data_source_key. example s3_raw_data_source_key: https://gamereviewsanalysisstack-gamereviews0f797a9d-zbgj5bs2wpej.s3.amazonaws.com/31d995a7-6324-47db-a5ad-fb555ac06928/jobs/b732afc7-0666-4d22-b3fd-a1a1f02a6acb/raw-data/elden_ring_steam_reviews_reduced.csv
-
+    
     s3_source_key = event["s3_raw_data_source_key"].split("/",3)[-1]
     
     print(f"Processing CSV file: {s3_source_key}")
