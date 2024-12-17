@@ -10,7 +10,7 @@ Conducting effective analysis requires carefully engineered prompts tailored to 
 
 ## Solution Overview
 
-![alt text](assets/solution2-High%20Level%2Arch.png "Solution diagram")
+![alt text](assets/solution2-High%20Level%20Arch.png "Solution diagram")
 
 These following steps talk through the sequence of actions that enable game reviews sentiment analysis and summarization with AWS AI/ML services.
 
