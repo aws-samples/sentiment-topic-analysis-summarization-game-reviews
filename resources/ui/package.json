@@ -22,11 +22,11 @@
   "devDependencies": {
     "@types/react": "18.3.5",
     "@types/react-dom": "18.3.0",
-    "@vitejs/plugin-react": "4.3.1",
+    "@vitejs/plugin-react": "4.4.1",
     "eslint": "9.15.0",
     "eslint-plugin-react": "7.35.2",
     "eslint-plugin-react-hooks": "^5.1.0-rc-2ec26bc4-20241111",
     "eslint-plugin-react-refresh": "0.4.11",
-    "vite": "5.4.14"
+    "vite": "6.3.2"
   }
 }
